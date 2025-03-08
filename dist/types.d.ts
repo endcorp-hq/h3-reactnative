@@ -1,7 +1,7 @@
 /**
  * @module h3
  */
-declare module "h3-js" {
+declare module "h3-reactnative" {
     /**
      * 64-bit hexidecimal string representation of an H3 index
      * @static

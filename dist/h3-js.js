@@ -457,8 +457,6 @@ var libh3 = function (libh3) {
     return stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
   }
 
-  var UTF16Decoder = typeof TextDecoder !== "undefined" ? new TextDecoder("utf-16le") : undefined;
-
   function writeArrayToMemory(array, buffer) {
     HEAP8.set(array, buffer);
   }
