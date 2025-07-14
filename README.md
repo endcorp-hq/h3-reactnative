@@ -21,6 +21,69 @@ For more information on H3 and for the full API documentation, please see the [H
 
     npm install git+https://github.com/realPrimoh/h3-reactnative.git
 
+---
+
+### Building on Apple Silicon (M1/M2 Macs)
+
+Some dependencies (such as `iltorb`) require a C++ toolchain that is compatible with Apple Silicon. If you encounter errors like:
+
+```
+fatal error: 'memory' file not found
+```
+
+this means the default toolchain is missing required C++ headers. The recommended solution is to use LLVM from Homebrew.
+
+#### 1. Install LLVM
+
+```sh
+brew install llvm
+```
+
+#### 2. Set Environment Variables
+
+Before running `yarn install` or `npm install`, set the following environment variables in your terminal:
+
+```sh
+export CC=/opt/homebrew/opt/llvm/bin/clang
+export CXX=/opt/homebrew/opt/llvm/bin/clang++
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+```
+
+You can add these lines to your `~/.zshrc` or `~/.bash_profile` to make them permanent.
+
+#### 3. Install Dependencies
+
+```sh
+yarn install
+```
+
+or
+
+```sh
+npm install
+```
+
+#### 4. (Optional) Add LLVM to Your PATH
+
+If you want to use LLVM’s tools by default, add this to your shell profile:
+
+```sh
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+```
+
+#### Why does this work?
+
+Homebrew’s LLVM provides a modern, ARM64-native C/C++ toolchain that includes all required standard library headers and is compatible with Apple Silicon. This avoids issues with missing headers or incompatible binaries that can occur with the system’s default toolchain or with older, unmaintained native Node modules.
+
+#### Best Practices for Contributors
+
+- Document the need for LLVM in the README (see above).
+- Consider using Node.js LTS (v18 or v20) for best compatibility.
+- If possible, migrate away from deprecated native modules (like `iltorb`) to pure JS or maintained alternatives.
+
+---
+
 ## Usage
 
 The library uses ES6 modules. Bundles for Node are built to the `dist` folder.
